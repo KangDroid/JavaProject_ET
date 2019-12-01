@@ -15,21 +15,26 @@ public class DBManager {
         return conn;
     }
 
-    public void connectDB() {
+    public boolean connectDB() {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/KangDroidWord",
                     "KangDroid",
                     "greenjoa");
-            if (conn != null) {
-                System.out.println("DB Connection Succeed");
-            }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("JDBC Driver Load Failed");
+            return false;
         } catch (SQLException e) {
             System.out.println("DB Connection Failed");
-            e.printStackTrace();
+            //e.printStackTrace();
+            return false;
+        }
+        if (conn != null) {
+            //System.out.println("DB Connection Succeed");
+            return true;
+        } else {
+            return false;
         }
     }
 

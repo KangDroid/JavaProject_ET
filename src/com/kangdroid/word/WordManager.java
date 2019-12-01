@@ -2,6 +2,8 @@ package com.kangdroid.word;
 
 import com.kangdroid.db.DBManager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +14,11 @@ public class WordManager {
 	String path;
 	Set<Word> st = new HashSet<>();
 	DBManager dbm;
+	boolean isDBAvailable;
 
 	public WordManager() {
 		this.dbm = new DBManager();
-		this.dbm.connectDB();
+		isDBAvailable = this.dbm.connectDB();
 	}
 
 	public WordManager(String path) {
@@ -23,28 +26,52 @@ public class WordManager {
 	}
 
 	public void load() {
-		ResultSet rs;
-		StringTokenizer tokens;
+		if (isDBAvailable) {
+			System.out.println("Using DB");
+			ResultSet rs;
+			StringTokenizer tokens;
 
-		String sql = "select * from kangdroidword";
-		try {
-			Connection conn = dbm.getConn();
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			while (rs.next()) { //1, 2, 3
-				String name = rs.getString(2);
-				String meaning = rs.getString(3);
-				Word word = new Word(name);
-				tokens = new StringTokenizer(meaning, ",");
+			String sql = "select * from kangdroidword";
+			try {
+				Connection conn = dbm.getConn();
+				PreparedStatement psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				while (rs.next()) { //1, 2, 3
+					String name = rs.getString(2);
+					String meaning = rs.getString(3);
+					Word word = new Word(name);
+					tokens = new StringTokenizer(meaning, ",");
+					while (tokens.hasMoreTokens()) {
+						word.addMean(tokens.nextToken().trim());
+					}
+					st.add(word);
+				}
+				conn.close();
+				psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Using TXT");
+			File file = new File("words.txt");
+			Scanner scanner;
+			try {
+				scanner = new Scanner(file, "UTF-8");
+			} catch (FileNotFoundException e) {
+				System.out.println("Cannot Find File Information.");
+				return;
+			}
+			StringTokenizer tokens;
+
+			while (scanner.hasNextLine()) {
+				tokens = new StringTokenizer(scanner.nextLine(), ":/");
+				Word word = new Word(tokens.nextToken().trim());
 				while (tokens.hasMoreTokens()) {
 					word.addMean(tokens.nextToken().trim());
 				}
+				//words.add(word);
 				st.add(word);
 			}
-			conn.close();
-			psmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 
