@@ -51,8 +51,11 @@ public class MainMenu extends JFrame {
         topDivider.add(mainTitle, BorderLayout.CENTER);
 
         // Main Centre Divider
-        centreDivider = new JPanel(new FlowLayout());
-        this.add(centreDivider, BorderLayout.SOUTH);
+        centreDivider = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        this.add(centreDivider, BorderLayout.CENTER);
 
         // The Buttons
         showWordList = new JButton("Show words for game!");
@@ -66,7 +69,11 @@ public class MainMenu extends JFrame {
                 }
             }
         );
-        centreDivider.add(showWordList);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        centreDivider.add(showWordList, gbc);
 
         wordGameSL = new JButton("OE Question!");
         wordGameSL.addActionListener(new ActionListener() {
@@ -77,7 +84,11 @@ public class MainMenu extends JFrame {
                 new WordSQDialog().initSQDialog();
             }
         });
-        centreDivider.add(wordGameSL);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        centreDivider.add(wordGameSL, gbc);
 
         wordGameMCQ = new JButton("MCQ Questions");
         wordGameMCQ.addActionListener(new ActionListener() {
@@ -88,7 +99,11 @@ public class MainMenu extends JFrame {
                 new WordGameMCQDialog().init();
             }
         });
-        centreDivider.add(wordGameMCQ);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        centreDivider.add(wordGameMCQ, gbc);
 
         showWordFrequency = new JButton("Show Frequency");
         showWordFrequency.addActionListener(new ActionListener() {
@@ -100,7 +115,11 @@ public class MainMenu extends JFrame {
                 //wg.frequencyWrapper();
             }
         });
-        centreDivider.add(showWordFrequency);
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        centreDivider.add(showWordFrequency, gbc);
 
         this.setVisible(true);
     }
