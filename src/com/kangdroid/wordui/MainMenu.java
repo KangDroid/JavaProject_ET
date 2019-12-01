@@ -30,6 +30,8 @@ public class MainMenu extends JFrame {
     }
 
     public void restoreStatus() {
+        this.setTitle("Word Game");
+        this.setSize(700, 400);
         topDivider.setVisible(true);
         centreDivider.setVisible(true);
     }
