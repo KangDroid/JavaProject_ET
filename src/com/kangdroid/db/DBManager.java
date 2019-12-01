@@ -119,33 +119,29 @@ public class DBManager {
     private int getLastIndex() {
         int idx = 0;
         String sql = "select * from kangdroidword";
+        if (conn == null) System.out.println("Conn is NULL");
         try {
             PreparedStatement tmp = conn.prepareStatement(sql);
-            rs = tmp.executeQuery();
-            while (rs.next()) { //1, 2, 3
-                idx = rs.getInt(1);
+            ResultSet rs_two = tmp.executeQuery();
+            while (rs_two.next()) { //1, 2, 3
+                idx = rs_two.getInt(1);
             }
-            tmp.close();
-            rs.close();
+            //tmp.close();
+            //rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return idx;
     }
 
-    public void registerWord() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("단어를 입력해 주세요.");
-        String name = sc.nextLine();
-
-        System.out.println("단어의 뜻을 입력해주세요.");
-        String meaning = sc.nextLine();
+    public void registerWord(String words, String meaning) {
 
         String sql = "insert into kangdroidword values(?,?,?)";
         try {
+            connectDB();
             psmt = conn.prepareStatement(sql);
             psmt.setInt(1, getLastIndex()+1);
-            psmt.setString(2, name);
+            psmt.setString(2, words);
             psmt.setString(3, meaning);
             psmt.execute();
         } catch (SQLException e) {

@@ -22,6 +22,7 @@ public class MainMenu extends JFrame {
     private JButton wordGameSL;
     private JButton wordGameMCQ;
     private JButton showWordFrequency;
+    private JButton addWordBtn;
 
     // The Constructor
     public MainMenu() {
@@ -121,7 +122,73 @@ public class MainMenu extends JFrame {
         gbc.gridheight = 1;
         centreDivider.add(showWordFrequency, gbc);
 
+        addWordBtn = new JButton("Add Words");
+        addWordBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                new AddWordUI().init();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        centreDivider.add(addWordBtn, gbc);
+
         this.setVisible(true);
+    }
+
+    private class AddWordUI extends JDialog {
+        // The Main Panel
+        private JPanel mMainPanel;
+        private JPanel mBtnPanel;
+
+        // Text Input
+        private JTextField mWordInput;
+        private JTextField mMeaningInput;
+
+        // Buttons
+        private JButton mCloseBtn;
+        private JButton mSubmitWords;
+
+        private void init() {
+            this.setSize(500, 200);
+
+            mMainPanel = new JPanel(new GridLayout(5, 1));
+            this.add(mMainPanel);
+
+            mMainPanel.add(new JLabel("Words:"));
+            mWordInput = new JTextField(30);
+            mMainPanel.add(mWordInput);
+
+            mMainPanel.add(new JLabel("Meaning:"));
+            mMeaningInput = new JTextField(30);
+            mMainPanel.add(mMeaningInput);
+
+            mBtnPanel = new JPanel(new FlowLayout());
+            mMainPanel.add(mBtnPanel);
+
+            mCloseBtn = new JButton("Close");
+            mCloseBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    dispose();
+                }
+            });
+            mBtnPanel.add(mCloseBtn);
+
+            mSubmitWords = new JButton("Submit");
+            mSubmitWords.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    String words = mWordInput.getText().trim();
+                    String meaning = mMeaningInput.getText().trim();
+                    wg.addWordWrapperTwo(words, meaning);
+                }
+            });
+            mBtnPanel.add(mSubmitWords);
+            this.setVisible(true);
+        }
     }
 
     private class WordFrequencyUI {

@@ -18,6 +18,10 @@ public class WordGame {
 		return words.getWordList();
 	}
 
+	public void addWordWrapperTwo(String words, String meaning) {
+		this.words.addWordsWrapper(words, meaning);
+	}
+
 	public void addWord() {
 		String word = null;
 		String meaning = null;
