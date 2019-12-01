@@ -1,4 +1,4 @@
-package com.kangdroid.test;
+package com.kangdroid.db;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,6 +1,6 @@
 package com.kangdroid.word;
 
-import com.kangdroid.test.DBManager;
+import com.kangdroid.db.DBManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
