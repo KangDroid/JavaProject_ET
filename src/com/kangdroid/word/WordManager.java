@@ -2,8 +2,6 @@ package com.kangdroid.word;
 
 import com.kangdroid.test.DBManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +68,16 @@ public class WordManager {
 		for (int i = 0; i < 10; i++) {
 			System.out.println(lst_word.get(i));
 		}
+	}
+
+	public String getWordList() {
+		String t = "";
+		Iterator<Word> itr = st.iterator();
+
+		while(itr.hasNext()) {
+			t += (itr.next()) + "\n";
+		}
+		return t;
 	}
 
 	public void printTst() {
