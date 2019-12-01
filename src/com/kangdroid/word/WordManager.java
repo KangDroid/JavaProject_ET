@@ -47,6 +47,40 @@ public class WordManager {
 			e.printStackTrace();
 		}
 	}
+
+	public String printTopFrequencyUI() {
+		String mTopFreq = "";
+		List<Word> lst_word = new ArrayList<>();
+		Iterator<Word> itr = st.iterator();
+
+		for (int i = 0; i < st.size(); i++) {
+			lst_word.add(itr.next());
+		}
+
+		Collections.sort(lst_word, Collections.reverseOrder());
+
+		for (int i = 0; i < 10; i++) {
+			mTopFreq += (lst_word.get(i) + "\n");
+		}
+		return mTopFreq;
+	}
+
+	public String printBottomFrequencyUI() {
+		String mTopFreq = "";
+		List<Word> lst_word = new ArrayList<>();
+		Iterator<Word> itr = st.iterator();
+
+		for (int i = 0; i < st.size(); i++) {
+			lst_word.add(itr.next());
+		}
+		Collections.sort(lst_word);
+		for (int i = 0; i < 10; i++) {
+			mTopFreq += (lst_word.get(i) + "\n");
+		}
+
+		return mTopFreq;
+	}
+
 	public void printFrequency() {
 		List<Word> lst_word = new ArrayList<>();
 		Iterator<Word> itr = st.iterator();

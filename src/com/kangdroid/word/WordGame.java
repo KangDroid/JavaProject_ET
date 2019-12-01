@@ -100,6 +100,11 @@ public class WordGame {
 		words.printFrequency();
 	}
 
+	public void frequencyAdder(JTextArea mTop, JTextArea mBottom) {
+		mTop.setText(words.printTopFrequencyUI());
+		mBottom.setText(words.printBottomFrequencyUI());
+	}
+
 	public void multipleChoice() {
 		Scanner uin = new Scanner(System.in);
 		Random rand = new Random();
