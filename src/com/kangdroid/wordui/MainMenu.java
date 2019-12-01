@@ -159,6 +159,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     ts.setThreadInturrpted(true);
+                    ts.setMCQFinished(true);
                     bottomArea.setVisible(false);
                     centreArea.setVisible(false);
                     mcqArea.setVisible(false);
@@ -243,6 +244,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     ts.setThreadInturrpted(true);
+                    ts.setMCQFinished(true);
                     questionListShow.setVisible(false);
                     mQuestionInputPanel.setVisible(false);
                     mButtonArea.setVisible(false);

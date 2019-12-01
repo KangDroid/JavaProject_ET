@@ -48,7 +48,7 @@ public class WordGame {
 				int correct = 0;
 				jta.setText("# Short Answer\n");
 				for (int i = 0; i < 5; i++) {
-					while (!ts.getThreadInturrpted()) {
+					if (!ts.getThreadInturrpted()) {
 						ts.setFinished(false);
 						jta.append("Q" + (i + 1) + ". What does '" + questions[i].getWord() + "' means?");
 						while (!ts.getFinished()) Thread.yield();
@@ -136,7 +136,7 @@ public class WordGame {
 				int howManyGot = 0;
 				Word[] choices;
 				for (int i = 0; i < 5; i++) {
-					while (!ts.getThreadInturrpted()) {
+					if (!ts.getThreadInturrpted()) {
 						ts.setMCQFinished(false);
 						rightAnswer = rand.nextInt(4);
 						choices = words.getRandomWords(4);
