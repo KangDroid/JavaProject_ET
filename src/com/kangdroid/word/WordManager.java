@@ -25,6 +25,13 @@ public class WordManager {
 		this.path = path;
 	}
 
+	/**
+	 * @return true if this program uses db, false if this program uses TXT Based Word
+	 */
+	public boolean getDBAStatus() {
+		return this.isDBAvailable;
+	}
+
 	public void load() {
 		if (isDBAvailable) {
 			System.out.println("Using DB");
