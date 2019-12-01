@@ -21,6 +21,7 @@ public class MainMenu extends JFrame {
     private JButton showWordList;
     private JButton wordGameSL;
     private JButton wordGameMCQ;
+    private JButton showWordFrequency;
 
     // The Constructor
     public MainMenu() {
@@ -37,7 +38,7 @@ public class MainMenu extends JFrame {
         // Root
         this.setTitle("Word Game");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 500);
+        this.setSize(700, 400);
 
         // Main Top Divider
         topDivider = new JPanel();
@@ -86,6 +87,15 @@ public class MainMenu extends JFrame {
             }
         });
         centreDivider.add(wordGameMCQ);
+
+        showWordFrequency = new JButton("Show Frequency");
+        showWordFrequency.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                wg.frequencyWrapper();
+            }
+        });
+        centreDivider.add(showWordFrequency);
 
         this.setVisible(true);
     }
