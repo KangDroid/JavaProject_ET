@@ -33,7 +33,7 @@ public class WordGame {
 		words.add(word, meaning);
 	}
 
-	public void shortAnswerUI(JTextArea jta, ThreadShared ts, JTextArea answerArea) {
+	public void shortAnswerUI(JTextArea jta, ThreadShared ts, JTextField answerArea) {
 		//int correct = 0;
 		Scanner in = new Scanner(System.in);
 		Random r = new Random();

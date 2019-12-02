@@ -162,6 +162,12 @@ public class MainMenu extends JFrame {
 
             mMainPanel.add(new JLabel("Meaning:"));
             mMeaningInput = new JTextField(30);
+            mMeaningInput.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mSubmitWords.doClick();
+                }
+            });
             mMainPanel.add(mMeaningInput);
 
             mBtnPanel = new JPanel(new FlowLayout());
@@ -343,7 +349,7 @@ public class MainMenu extends JFrame {
         JPanel mButtonArea;
 
         JTextArea questionMain;
-        JTextArea mQuestionInputMain;
+        JTextField mQuestionInputMain;
         JButton mQuestionSubmit;
         JButton mPrevButton;
 
@@ -377,7 +383,13 @@ public class MainMenu extends JFrame {
             mQuestionInputPanel.add(mBottomInput, BorderLayout.NORTH);
 
             // Question INPUT
-            mQuestionInputMain = new JTextArea(5, 30);
+            mQuestionInputMain = new JTextField(30);
+            mQuestionInputMain.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    mQuestionSubmit.doClick();
+                }
+            });
             mQuestionInputPanel.add(mQuestionInputMain, BorderLayout.CENTER);
 
             // Buttons
