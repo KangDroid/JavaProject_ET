@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class WordManager {
-	String path;
 	Set<Word> st = new HashSet<>();
 	DBManager dbm;
 	boolean isDBAvailable;
@@ -19,10 +18,6 @@ public class WordManager {
 	public WordManager() {
 		this.dbm = new DBManager();
 		isDBAvailable = this.dbm.connectDB();
-	}
-
-	public WordManager(String path) {
-		this.path = path;
 	}
 
 	/**
@@ -84,7 +79,6 @@ public class WordManager {
 				while (tokens.hasMoreTokens()) {
 					word.addMean(tokens.nextToken().trim());
 				}
-				//words.add(word);
 				st.add(word);
 			}
 		}
@@ -156,14 +150,6 @@ public class WordManager {
 		return t;
 	}
 
-	public void printTst() {
-		Iterator<Word> itr = st.iterator();
-
-		while(itr.hasNext()) {
-			System.out.println(itr.next());
-		}
-	}
-
 	public Word[] getRandomWords(int count) {
 		Iterator<Word> itr;
 		Random random = new Random();
@@ -176,7 +162,6 @@ public class WordManager {
 			for (int a = 0; a < ra; a++) {
 				w = itr.next();
 			}
-			//System.out.println(w);
 			for(j = 0; j < i; j++) {
 				if(randomWords[j].equals(w)) {
 					break;

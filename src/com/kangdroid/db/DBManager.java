@@ -31,27 +31,9 @@ public class DBManager {
             return false;
         }
         if (conn != null) {
-            //System.out.println("DB Connection Succeed");
             return true;
         } else {
             return false;
-        }
-    }
-
-    public void printDBSpecific() {
-        String sql = "select * from student where name = ?";
-        try {
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, "Jason Kang");
-            rs = psmt.executeQuery();
-            while (rs.next()) {
-                String name = rs.getString(1);
-                int kor = rs.getInt(2);
-                int eng = rs.getInt(3);
-                System.out.println(name + ", " + kor + "," + eng);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -84,22 +66,6 @@ public class DBManager {
                 }
                 psmt.setString(3, meaning);
                 psmt.execute();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void printDB() {
-        String sql = "select * from kangdroidword";
-        try {
-            psmt = conn.prepareStatement(sql);
-            rs = psmt.executeQuery();
-            while (rs.next()) { //1, 2, 3
-                int index = rs.getInt(1);
-                String name = rs.getString(2);
-                String meaning = rs.getString(3);
-                System.out.println("Index: " + index + "\nWord: " + name + "\nMeaning: " + meaning);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -143,20 +109,6 @@ public class DBManager {
             psmt.setInt(1, getLastIndex()+1);
             psmt.setString(2, words);
             psmt.setString(3, meaning);
-            psmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteQuery() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("지울 학생의 이름을 입력해 주세요:");
-        String name = sc.nextLine();
-        String sql = "delete from student where name = ?";
-        try {
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, name);
             psmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

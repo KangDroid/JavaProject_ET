@@ -113,7 +113,6 @@ public class MainMenu extends JFrame {
                 topDivider.setVisible(false);
                 centreDivider.setVisible(false);
                 new WordFrequencyUI().init();
-                //wg.frequencyWrapper();
             }
         });
         gbc.gridx = 0;
