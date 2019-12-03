@@ -27,11 +27,17 @@ public class WordManager {
 		return this.isDBAvailable;
 	}
 
-	public void addWordsWrapper(String words, String meaning) {
+	public boolean addWordsWrapper(String words, String meaning) {
 		if (isDBAvailable) {
-			dbm.registerWord(words, meaning);
+			try {
+				dbm.registerWord(words, meaning);
+			} catch (SQLException e) {
+				this.add(words, meaning);
+				return false; // Return false when registering on DB.
+			}
 		}
 		this.add(words, meaning);
+		return true;
 	}
 
 	public void load() {

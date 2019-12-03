@@ -18,8 +18,8 @@ public class WordGame {
 		return words.getWordList();
 	}
 
-	public void addWordWrapperTwo(String words, String meaning) {
-		this.words.addWordsWrapper(words, meaning);
+	public boolean addWordWrapperTwo(String words, String meaning) {
+		return this.words.addWordsWrapper(words, meaning);
 	}
 
 	public void shortAnswerUI(JTextArea jta, ThreadShared ts, JTextField answerArea) {
