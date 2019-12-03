@@ -30,9 +30,8 @@ public class WordManager {
 	public void addWordsWrapper(String words, String meaning) {
 		if (isDBAvailable) {
 			dbm.registerWord(words, meaning);
-		} else {
-			this.add(words, meaning);
 		}
+		this.add(words, meaning);
 	}
 
 	public void load() {
