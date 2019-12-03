@@ -22,17 +22,6 @@ public class WordGame {
 		this.words.addWordsWrapper(words, meaning);
 	}
 
-	public void addWord() {
-		String word = null;
-		String meaning = null;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("단어를 입력하세요: ");
-		word = sc.nextLine();
-		System.out.println("뜻을 입력하세요: ");
-		meaning = sc.nextLine();
-		words.add(word, meaning);
-	}
-
 	public void shortAnswerUI(JTextArea jta, ThreadShared ts, JTextField answerArea) {
 		//int correct = 0;
 		Scanner in = new Scanner(System.in);
@@ -68,10 +57,6 @@ public class WordGame {
 		};
 		Thread t = new Thread(testRunnable);
 		t.start();
-	}
-
-	public void frequencyWrapper() {
-		words.printFrequency();
 	}
 
 	public void frequencyAdder(JTextArea mTop, JTextArea mBottom) {

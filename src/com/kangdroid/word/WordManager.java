@@ -117,29 +117,6 @@ public class WordManager {
 		return mTopFreq;
 	}
 
-	public void printFrequency() {
-		List<Word> lst_word = new ArrayList<>();
-		Iterator<Word> itr = st.iterator();
-
-		for (int i = 0; i < st.size(); i++) {
-			lst_word.add(itr.next());
-		}
-
-		Collections.sort(lst_word, Collections.reverseOrder());
-
-		System.out.println("빈출도가 높은 Top 10");
-		for (int i = 0; i < 10; i++) {
-			System.out.println(lst_word.get(i));
-		}
-		System.out.println();
-		System.out.println("빈출도가 낮은 Top 10");
-
-		Collections.sort(lst_word);
-		for (int i = 0; i < 10; i++) {
-			System.out.println(lst_word.get(i));
-		}
-	}
-
 	public String getWordList() {
 		String t = "";
 		Iterator<Word> itr = st.iterator();
