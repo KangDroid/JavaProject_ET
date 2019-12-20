@@ -110,12 +110,33 @@ public class WordSettingsUI {
         mSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WordSettings.mMCQCount = Integer.parseInt(mMCQCtr.getText());
-                WordSettings.mOECount = Integer.parseInt(mOECtr.getText());
-                WordSettings.mMCQChoiceCount = Integer.parseInt(mMCQChoiceCT.getText());
-                JOptionPane.showMessageDialog(null, "Successfully changed Value!");
+                int mcqCount = Integer.parseInt(mMCQCtr.getText());
+                int moeCount = Integer.parseInt(mOECtr.getText());
+                int mcqchoice = Integer.parseInt(mMCQChoiceCT.getText());
+
+                if (mcqCount <= 0 || mcqCount >= 30) {
+                    JOptionPane.showMessageDialog(null, "MCQ Question cannot be under 0 or more than 30.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                    restoreString();
+                } else if (moeCount <= 0 || moeCount >= 30) {
+                    JOptionPane.showMessageDialog(null, "OE Question cannot be under 0 or more than 30.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                    restoreString();
+                } else if (mcqchoice <= 0 || mcqchoice >= 10) {
+                    JOptionPane.showMessageDialog(null, "MCQ Choice cannot be under 0 or more than 10.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                    restoreString();
+                } else {
+                    WordSettings.mMCQCount = Integer.parseInt(mMCQCtr.getText());
+                    WordSettings.mOECount = Integer.parseInt(mOECtr.getText());
+                    WordSettings.mMCQChoiceCount = Integer.parseInt(mMCQChoiceCT.getText());
+                    JOptionPane.showMessageDialog(null, "Successfully changed Value!");
+                }
             }
         });
         mMainPanelWS.add(mSubmit, gbc);
+    }
+
+    public void restoreString() {
+        mOECtr.setText(Integer.toString(WordSettings.mOECount));
+        mMCQCtr.setText(Integer.toString(WordSettings.mMCQCount));
+        mMCQChoiceCT.setText(Integer.toString(WordSettings.mMCQChoiceCount));
     }
 }
