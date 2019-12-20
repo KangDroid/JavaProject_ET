@@ -17,6 +17,8 @@ public class WordSettingsUI {
     private JTextField mOECtr;
     private JTextField mMCQCtr;
     private JTextField mMCQChoiceCT;
+    private JTextField mMCQTimeLimit;
+    private JTextField mOETimeLimit;
 
     private JButton mClose;
     private JButton mSubmit;
@@ -89,8 +91,38 @@ public class WordSettingsUI {
         });
         mMainPanelWS.add(mMCQChoiceCT, gbc);
 
-        // close
+        // MCQ Time Limit Label
         attachUI(0, 6, 2, 1);
+        mMainPanelWS.add(new JLabel("MCQ Time limit per question(In millis)"), gbc);
+
+        // MCQ Time Limit field
+        attachUI(4, 6, 2, 1);
+        mMCQTimeLimit = new JTextField(10);
+        mMCQTimeLimit.setText(Long.toString(WordSettings.mMCQTimeLimit));
+        mMCQTimeLimit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mSubmit.doClick();
+            }
+        });
+        mMainPanelWS.add(mMCQTimeLimit, gbc);
+
+        attachUI(0, 8, 2, 1);
+        mMainPanelWS.add(new JLabel("OE Time limit per question(In millis)"), gbc);
+
+        attachUI(4, 8, 2, 1);
+        mOETimeLimit = new JTextField(10);
+        mOETimeLimit.setText(Long.toString(WordSettings.mOETimeLimit));
+        mOETimeLimit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mSubmit.doClick();
+            }
+        });
+        mMainPanelWS.add(mOETimeLimit, gbc);
+
+        // close
+        attachUI(0, 10, 2, 1);
         mClose = new JButton("Close");
         mClose.addActionListener(new ActionListener() {
             @Override
@@ -103,7 +135,7 @@ public class WordSettingsUI {
 
         // Submit
         gbc.gridx = 4;
-        gbc.gridy = 6;
+        gbc.gridy = 10;
         gbc.gridwidth = 2;
         gbc.gridheight = 1;
         mSubmit = new JButton("Submit");
@@ -113,6 +145,8 @@ public class WordSettingsUI {
                 int mcqCount = Integer.parseInt(mMCQCtr.getText());
                 int moeCount = Integer.parseInt(mOECtr.getText());
                 int mcqchoice = Integer.parseInt(mMCQChoiceCT.getText());
+                long mcqlimit = Long.parseLong(mMCQTimeLimit.getText());
+                long oelimit = Long.parseLong(mOETimeLimit.getText());
 
                 if (mcqCount <= 0 || mcqCount >= 30) {
                     JOptionPane.showMessageDialog(null, "MCQ Question cannot be under 0 or more than 30.", "Error Message", JOptionPane.ERROR_MESSAGE);
@@ -123,10 +157,18 @@ public class WordSettingsUI {
                 } else if (mcqchoice <= 0 || mcqchoice >= 10) {
                     JOptionPane.showMessageDialog(null, "MCQ Choice cannot be under 0 or more than 10.", "Error Message", JOptionPane.ERROR_MESSAGE);
                     restoreString();
+                } else if (mcqlimit <= 1000 || mcqlimit >= 1000000) {
+                    JOptionPane.showMessageDialog(null, "MCQ Time Limit should not less than 1s or should not greater than 100s", "Error Message", JOptionPane.ERROR_MESSAGE);
+                    restoreString();
+                } else if (oelimit <= 1000 || oelimit >= 1000000) {
+                    JOptionPane.showMessageDialog(null, "OE Time Limit should not less than 1s or should not greater than 100s", "Error Message", JOptionPane.ERROR_MESSAGE);
+                    restoreString();
                 } else {
                     WordSettings.mMCQCount = Integer.parseInt(mMCQCtr.getText());
                     WordSettings.mOECount = Integer.parseInt(mOECtr.getText());
                     WordSettings.mMCQChoiceCount = Integer.parseInt(mMCQChoiceCT.getText());
+                    WordSettings.mMCQTimeLimit = Long.parseLong(mMCQTimeLimit.getText());
+                    WordSettings.mOETimeLimit = Long.parseLong(mOETimeLimit.getText());
                     JOptionPane.showMessageDialog(null, "Successfully changed Value!");
                 }
             }
@@ -138,5 +180,7 @@ public class WordSettingsUI {
         mOECtr.setText(Integer.toString(WordSettings.mOECount));
         mMCQCtr.setText(Integer.toString(WordSettings.mMCQCount));
         mMCQChoiceCT.setText(Integer.toString(WordSettings.mMCQChoiceCount));
+        mMCQTimeLimit.setText(Long.toString(WordSettings.mMCQTimeLimit));
+        mOETimeLimit.setText(Long.toString(WordSettings.mOETimeLimit));
     }
 }
