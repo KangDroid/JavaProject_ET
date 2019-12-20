@@ -99,7 +99,7 @@ public class WordSQDialog {
         // Showing some question area
         questionMain = new JTextArea(5, 30);
         questionMain.setEditable(false);
-        questionListShow.add(questionMain, BorderLayout.CENTER);
+        questionListShow.add(new JScrollPane(questionMain), BorderLayout.CENTER);
 
         mMain.getWg().shortAnswerUI(questionMain, ts, mQuestionInputMain);
     }
