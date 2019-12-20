@@ -98,8 +98,13 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String finder = JOptionPane.showInputDialog("Input word you want to search.");
-
-                JOptionPane.showMessageDialog(null, wg.searchWrapper(finder));
+                if (finder != null) {
+                    if (finder.equals("")) {
+                        JOptionPane.showMessageDialog(null, "You need to enter the word!", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, wg.searchWrapper(finder));
+                    }
+                }
             }
         });
         attachUI(0, 2, 2, 1);
