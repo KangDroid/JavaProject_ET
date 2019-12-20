@@ -2,6 +2,7 @@ package com.kangdroid.wordui;
 
 import com.kangdroid.word.WordGame;
 import com.kangdroid.word.WordManager;
+import com.kangdroid.word.WordSettings;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,6 +24,7 @@ public class MainMenu extends JFrame {
     private JButton wordGameMCQ;
     private JButton showWordFrequency;
     private JButton addWordBtn;
+    private JButton mWordSettings;
 
     // The Constructor
     public MainMenu() {
@@ -134,7 +136,114 @@ public class MainMenu extends JFrame {
         gbc.gridheight = 1;
         centreDivider.add(addWordBtn, gbc);
 
+        mWordSettings = new JButton("Word Settings");
+        mWordSettings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                topDivider.setVisible(false);
+                centreDivider.setVisible(false);
+                new WordSettingsUI().init();
+            }
+        });
+
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        centreDivider.add(mWordSettings, gbc);
+
         this.setVisible(true);
+    }
+
+    private class WordSettingsUI {
+        private JPanel mMainPanelWS;
+        private JTextField mOECtr;
+        private JTextField mMCQCtr;
+
+        private JButton mClose;
+        private JButton mSubmit;
+        private void init() {
+            mMainPanelWS = new JPanel(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.VERTICAL;
+            gbc.insets = new Insets(5, 5, 5, 5);
+            add(mMainPanelWS, BorderLayout.CENTER);
+
+            // Label
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 1;
+            mMainPanelWS.add(new JLabel("OE Question Limit"), gbc);
+
+            // OE Field
+            gbc.gridx = 4;
+            gbc.gridy = 0;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 1;
+            mOECtr = new JTextField(10);
+            mOECtr.setText(Integer.toString(WordSettings.mOECount));
+            mOECtr.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mSubmit.doClick();
+                }
+            });
+            mMainPanelWS.add(mOECtr, gbc);
+
+            //Label
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 1;
+            mMainPanelWS.add(new JLabel("MCQ Question Limit"), gbc);
+
+            // MCQ Field
+            gbc.gridx = 4;
+            gbc.gridy = 2;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 1;
+            mMCQCtr = new JTextField(10);
+            mMCQCtr.setText(Integer.toString(WordSettings.mMCQCount));
+            mMCQCtr.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mSubmit.doClick();
+                }
+            });
+            mMainPanelWS.add(mMCQCtr, gbc);
+
+            // close
+            gbc.gridx = 0;
+            gbc.gridy = 4;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 1;
+            mClose = new JButton("Close");
+            mClose.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mMainPanelWS.setVisible(false);
+                    restoreStatus();
+                }
+            });
+            mMainPanelWS.add(mClose, gbc);
+
+            // Submit
+            gbc.gridx = 4;
+            gbc.gridy = 4;
+            gbc.gridwidth = 2;
+            gbc.gridheight = 1;
+            mSubmit = new JButton("Submit");
+            mSubmit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    WordSettings.mMCQCount = Integer.parseInt(mMCQCtr.getText());
+                    WordSettings.mOECount = Integer.parseInt(mOECtr.getText());
+                    JOptionPane.showMessageDialog(null, "Successfully changed Value!");
+                }
+            });
+            mMainPanelWS.add(mSubmit, gbc);
+        }
     }
 
     private class AddWordUI extends JDialog {
@@ -291,9 +400,9 @@ public class MainMenu extends JFrame {
             add(mcqArea, BorderLayout.EAST);
 
             // MCQ Show Text Area
-            mcqShowArea = new JTextArea(5, 20);
+            mcqShowArea = new JTextArea(20, 20);
             mcqShowArea.setEditable(false);
-            centreArea.add(mcqShowArea, BorderLayout.WEST);
+            centreArea.add(new JScrollPane(mcqShowArea), BorderLayout.WEST);
 
             // JRadioButton Group
             radioGroup = new ButtonGroup();

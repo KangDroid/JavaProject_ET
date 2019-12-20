@@ -37,7 +37,7 @@ public class WordGame {
 		//int correct = 0;
 		Scanner in = new Scanner(System.in);
 		Random r = new Random();
-		Word[] questions = words.getRandomWords(5);
+		Word[] questions = words.getRandomWords(WordSettings.mOECount);
 		for (int i = 0; i < questions.length; i++) {
 			questions[i].addCount();
 		}
@@ -47,7 +47,7 @@ public class WordGame {
 			public void run() {
 				int correct = 0;
 				jta.setText("# Short Answer\n");
-				for (int i = 0; i < 5; i++) {
+				for (int i = 0; i < WordSettings.mOECount; i++) {
 					if (!ts.getThreadInturrpted()) {
 						ts.setFinished(false);
 						jta.append("Q" + (i + 1) + ". What does '" + questions[i].getWord() + "' means?");
@@ -63,7 +63,7 @@ public class WordGame {
 						jta.append("# " + questions[i] + "\n");
 					}
 				}
-				jta.append("You got " + correct + "/5 right word.");
+				jta.append("You got " + correct + "/" + WordSettings.mOECount + "right word.");
 			}
 		};
 		Thread t = new Thread(testRunnable);
@@ -87,7 +87,7 @@ public class WordGame {
 				int rightAnswer, answer;
 				int howManyGot = 0;
 				Word[] choices;
-				for (int i = 0; i < 5; i++) {
+				for (int i = 0; i < WordSettings.mMCQCount; i++) {
 					if (!ts.getThreadInturrpted()) {
 						ts.setMCQFinished(false);
 						rightAnswer = rand.nextInt(4);
@@ -108,7 +108,7 @@ public class WordGame {
 						}
 					}
 				}
-				wordShowArea.append("총 5문제 중 " + howManyGot + "만큼 맞았습니다!\n");
+				wordShowArea.append("총 " + WordSettings.mMCQCount + "문제 중 " + howManyGot + "만큼 맞았습니다!\n");
 			}
 		};
 		Thread thr = new Thread(rn);
