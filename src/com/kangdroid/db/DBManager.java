@@ -2,6 +2,7 @@ package com.kangdroid.db;
 
 import com.kangdroid.word.Word;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -28,9 +29,15 @@ public class DBManager {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("JDBC Driver Load Failed");
+            System.out.println("PLEASE CHECK WHETHER JDBC DRIVER ADDED TO LIBRARY PATH.");
+            System.out.println("PLEASE REFER TO REPORT FOR MORE DETAILS.");
+            JOptionPane.showMessageDialog(null, "PLEASE CHECK WHETHER JDBC DRIVER ADDED TO LIBRARY PATH. \nPLEASE REFER TO REPORT FOR MORE DETAILS.\nFALLING BACK TO TXT-BASED DICTIONARY", "JDBC Driver Load Failed", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (SQLException e) {
             System.out.println("DB Connection Failed");
+            System.out.println("PLEASE CHECK WHETHER SERVER IS ONLINE/OFFLINE. CONTACT TO ADMIN FOR DETAILS");
+            System.out.println("FALLING BACK TO TXT-BASED DICTIONARY. SOME FEATURE WILL BE LIMITED.");
+            JOptionPane.showMessageDialog(null, "PLEASE CHECK WHETHER SERVER IS ONLINE/OFFLINE. CONTACT TO ADMIN FOR DETAILS \nFALLING BACK TO TXT-BASED DICTIONARY. SOME FEATURE WILL BE LIMITED.", "DB Connection Failed", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             return false;
         }
