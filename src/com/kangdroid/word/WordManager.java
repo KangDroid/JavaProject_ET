@@ -27,12 +27,17 @@ public class WordManager {
 		return this.isDBAvailable;
 	}
 
-	public void addWordsWrapper(String words, String meaning) {
+	public boolean addWordsWrapper(String words, String meaning) {
 		if (isDBAvailable) {
-			dbm.registerWord(words, meaning);
-		} else {
-			this.add(words, meaning);
+			try {
+				dbm.registerWord(words, meaning);
+			} catch (SQLException e) {
+				this.add(words, meaning);
+				return false; // Return false when registering on DB.
+			}
 		}
+		this.add(words, meaning);
+		return true;
 	}
 
 	public void load() {
@@ -115,29 +120,6 @@ public class WordManager {
 		}
 
 		return mTopFreq;
-	}
-
-	public void printFrequency() {
-		List<Word> lst_word = new ArrayList<>();
-		Iterator<Word> itr = st.iterator();
-
-		for (int i = 0; i < st.size(); i++) {
-			lst_word.add(itr.next());
-		}
-
-		Collections.sort(lst_word, Collections.reverseOrder());
-
-		System.out.println("빈출도가 높은 Top 10");
-		for (int i = 0; i < 10; i++) {
-			System.out.println(lst_word.get(i));
-		}
-		System.out.println();
-		System.out.println("빈출도가 낮은 Top 10");
-
-		Collections.sort(lst_word);
-		for (int i = 0; i < 10; i++) {
-			System.out.println(lst_word.get(i));
-		}
 	}
 
 	public String getWordList() {

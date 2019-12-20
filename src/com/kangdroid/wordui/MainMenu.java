@@ -297,7 +297,11 @@ public class MainMenu extends JFrame {
                 public void actionPerformed(ActionEvent actionEvent) {
                     String words = mWordInput.getText().trim();
                     String meaning = mMeaningInput.getText().trim();
-                    wg.addWordWrapperTwo(words, meaning);
+                    if (wg.addWordWrapperTwo(words, meaning)) {
+                        JOptionPane.showMessageDialog(null, "Adding words to game successfull!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to add words!", "Failed", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
             mBtnPanel.add(mSubmitWords);

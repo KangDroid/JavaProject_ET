@@ -18,19 +18,8 @@ public class WordGame {
 		return words.getWordList();
 	}
 
-	public void addWordWrapperTwo(String words, String meaning) {
-		this.words.addWordsWrapper(words, meaning);
-	}
-
-	public void addWord() {
-		String word = null;
-		String meaning = null;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("단어를 입력하세요: ");
-		word = sc.nextLine();
-		System.out.println("뜻을 입력하세요: ");
-		meaning = sc.nextLine();
-		words.add(word, meaning);
+	public boolean addWordWrapperTwo(String words, String meaning) {
+		return this.words.addWordsWrapper(words, meaning);
 	}
 
 	public void shortAnswerUI(JTextArea jta, ThreadShared ts, JTextField answerArea) {
@@ -68,10 +57,6 @@ public class WordGame {
 		};
 		Thread t = new Thread(testRunnable);
 		t.start();
-	}
-
-	public void frequencyWrapper() {
-		words.printFrequency();
 	}
 
 	public void frequencyAdder(JTextArea mTop, JTextArea mBottom) {
