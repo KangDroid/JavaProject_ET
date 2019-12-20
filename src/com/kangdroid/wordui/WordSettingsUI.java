@@ -142,11 +142,22 @@ public class WordSettingsUI {
         mSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int mcqCount = Integer.parseInt(mMCQCtr.getText());
-                int moeCount = Integer.parseInt(mOECtr.getText());
-                int mcqchoice = Integer.parseInt(mMCQChoiceCT.getText());
-                long mcqlimit = Long.parseLong(mMCQTimeLimit.getText());
-                long oelimit = Long.parseLong(mOETimeLimit.getText());
+                int mcqCount = 0;
+                int moeCount = 0;
+                int mcqchoice = 0;
+                long mcqlimit = 0;
+                long oelimit = 0;
+                try {
+                    mcqCount = Integer.parseInt(mMCQCtr.getText());
+                    moeCount = Integer.parseInt(mOECtr.getText());
+                    mcqchoice = Integer.parseInt(mMCQChoiceCT.getText());
+                    mcqlimit = Long.parseLong(mMCQTimeLimit.getText());
+                    oelimit = Long.parseLong(mOETimeLimit.getText());
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(null, "The input must be in integer/number type.", "Nuber is not recognized!", JOptionPane.ERROR_MESSAGE);
+                    restoreString();
+                    return;
+                }
 
                 if (mcqCount <= 0 || mcqCount >= 30) {
                     JOptionPane.showMessageDialog(null, "MCQ Question cannot be under 0 or more than 30.", "Error Message", JOptionPane.ERROR_MESSAGE);
