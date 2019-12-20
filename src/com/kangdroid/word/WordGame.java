@@ -14,6 +14,10 @@ public class WordGame {
 		words.load();
 	}
 
+	public String searchWrapper(String input) {
+		return words.searchWord(input);
+	}
+
 	public String getWordList() {
 		return words.getWordList();
 	}

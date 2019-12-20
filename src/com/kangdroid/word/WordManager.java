@@ -20,6 +20,19 @@ public class WordManager {
 		isDBAvailable = this.dbm.connectDB();
 	}
 
+	public String searchWord(String target) {
+		String t = "We do not have such word: " + target;
+		Iterator<Word> tmpIterator = st.iterator();
+		while (tmpIterator.hasNext()) {
+			Word tmp = tmpIterator.next();
+			if (tmp.getWord().equals(target)) {
+				t = "The Word " + target + " its meaning is : " + tmp.getWordMeaning();
+				break;
+			}
+		}
+		return t;
+	}
+
 	/**
 	 * @return true if this program uses db, false if this program uses TXT Based Word
 	 */
