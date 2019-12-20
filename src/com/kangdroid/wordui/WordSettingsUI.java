@@ -16,6 +16,7 @@ public class WordSettingsUI {
     private JPanel mMainPanelWS;
     private JTextField mOECtr;
     private JTextField mMCQCtr;
+    private JTextField mMCQChoiceCT;
 
     private JButton mClose;
     private JButton mSubmit;
@@ -72,8 +73,24 @@ public class WordSettingsUI {
         });
         mMainPanelWS.add(mMCQCtr, gbc);
 
-        // close
+        // Label
         attachUI(0, 4, 2, 1);
+        mMainPanelWS.add(new JLabel("MCQ Choice Limit"), gbc);
+
+        // MCQ Choice Label
+        attachUI(4, 4, 2, 1);
+        mMCQChoiceCT = new JTextField(10);
+        mMCQChoiceCT.setText(Integer.toString(WordSettings.mMCQChoiceCount));
+        mMCQChoiceCT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mSubmit.doClick();
+            }
+        });
+        mMainPanelWS.add(mMCQChoiceCT, gbc);
+
+        // close
+        attachUI(0, 6, 2, 1);
         mClose = new JButton("Close");
         mClose.addActionListener(new ActionListener() {
             @Override
@@ -86,7 +103,7 @@ public class WordSettingsUI {
 
         // Submit
         gbc.gridx = 4;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         gbc.gridwidth = 2;
         gbc.gridheight = 1;
         mSubmit = new JButton("Submit");
@@ -95,6 +112,7 @@ public class WordSettingsUI {
             public void actionPerformed(ActionEvent e) {
                 WordSettings.mMCQCount = Integer.parseInt(mMCQCtr.getText());
                 WordSettings.mOECount = Integer.parseInt(mOECtr.getText());
+                WordSettings.mMCQChoiceCount = Integer.parseInt(mMCQChoiceCT.getText());
                 JOptionPane.showMessageDialog(null, "Successfully changed Value!");
             }
         });

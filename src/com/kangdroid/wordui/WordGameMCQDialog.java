@@ -1,5 +1,7 @@
 package com.kangdroid.wordui;
 
+import com.kangdroid.word.WordSettings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,6 +31,9 @@ public class WordGameMCQDialog {
 
     public WordGameMCQDialog(MainMenu mm) {
         this.mMain = mm;
+        if (WordSettings.mMCQChoiceCount >= 5) {
+            mMain.setSize(900, 500);
+        }
         init();
     }
 
@@ -37,7 +42,7 @@ public class WordGameMCQDialog {
         ThreadShared ts = new ThreadShared();
         mMain.setTitle("MCQ Game!");
 
-        mcqShow = new JRadioButton[4];
+        mcqShow = new JRadioButton[WordSettings.mMCQChoiceCount];
 
         // Bottom Panel
         bottomArea = new JPanel(new FlowLayout());
@@ -49,7 +54,7 @@ public class WordGameMCQDialog {
 
         // MCQ Panel
         mcqArea = new JPanel();
-        mcqArea.setLayout(new GridLayout(5, 1, 5, 5));
+        mcqArea.setLayout(new GridLayout(5, 2, 5, 5));
         mMain.add(mcqArea, BorderLayout.EAST);
 
         // MCQ Show Text Area
@@ -60,7 +65,7 @@ public class WordGameMCQDialog {
         // JRadioButton Group
         radioGroup = new ButtonGroup();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < WordSettings.mMCQChoiceCount; i++) {
             mcqShow[i] = new JRadioButton();
             radioGroup.add(mcqShow[i]);
             mcqArea.add(mcqShow[i]);
@@ -86,7 +91,7 @@ public class WordGameMCQDialog {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < WordSettings.mMCQChoiceCount; i++) {
                     if (mcqShow[i].isSelected()) {
                         ts.setMcqValue(i);
                         break;

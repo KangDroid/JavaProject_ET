@@ -75,12 +75,12 @@ public class WordGame {
 				for (int i = 0; i < WordSettings.mMCQCount; i++) {
 					if (!ts.getThreadInturrpted()) {
 						ts.setMCQFinished(false);
-						rightAnswer = rand.nextInt(4);
-						choices = words.getRandomWords(4);
+						rightAnswer = rand.nextInt(WordSettings.mMCQChoiceCount);
+						choices = words.getRandomWords(WordSettings.mMCQChoiceCount);
 						choices[rightAnswer].addCount();
 						wordShowArea.append("Word: " + choices[rightAnswer].getWord() + "\n");
 
-						for (int j = 0; j < 4; j++) {
+						for (int j = 0; j < WordSettings.mMCQChoiceCount; j++) {
 							jr_choices[j].setText((j + 1) + ". " + choices[j].getWordMeaning());
 						}
 						while(!ts.getMCQFinished()) Thread.yield();
@@ -91,6 +91,7 @@ public class WordGame {
 						} else {
 							wordShowArea.append("틀렸습니다! ㅠㅠ\n\n");
 						}
+						System.out.println("Answer was" + answer + "and Right Answer was" + rightAnswer);
 					}
 				}
 				wordShowArea.append("총 " + WordSettings.mMCQCount + "문제 중 " + howManyGot + "만큼 맞았습니다!\n");
