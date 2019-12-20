@@ -59,19 +59,15 @@ public class DBManager {
         return idx;
     }
 
-    public void registerWord(String words, String meaning) {
+    public void registerWord(String words, String meaning) throws SQLException {
 
         String sql = "insert into kangdroidword values(?,?,?)";
-        try {
-            connectDB();
-            psmt = conn.prepareStatement(sql);
-            psmt.setInt(1, getLastIndex()+1);
-            psmt.setString(2, words);
-            psmt.setString(3, meaning);
-            psmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connectDB();
+        psmt = conn.prepareStatement(sql);
+        psmt.setInt(1, getLastIndex()+1);
+        psmt.setString(2, words);
+        psmt.setString(3, meaning);
+        psmt.execute();
     }
 
     /**
