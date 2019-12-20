@@ -26,6 +26,9 @@ public class MainMenu extends JFrame {
     private JButton addWordBtn;
     private JButton mWordSettings;
 
+    // GBC
+    private GridBagConstraints gbc;
+
     // The Constructor
     public MainMenu() {
         wg = new WordGame();
@@ -47,6 +50,13 @@ public class MainMenu extends JFrame {
         return this.wg;
     }
 
+    public void attachUI(int gridx, int gridy, int gridwidth, int gridheight) {
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.gridwidth = gridwidth;
+        gbc.gridheight = gridheight;
+    }
+
     private void init() {
         // Root
         this.setTitle("Word Game");
@@ -63,7 +73,7 @@ public class MainMenu extends JFrame {
 
         // Main Centre Divider
         centreDivider = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.insets = new Insets(5, 5, 5, 5);
         this.add(centreDivider, BorderLayout.CENTER);
@@ -79,10 +89,7 @@ public class MainMenu extends JFrame {
                 }
             }
         );
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
+        attachUI(0, 0, 2, 1);
         centreDivider.add(showWordList, gbc);
 
         wordGameSL = new JButton("OE Question!");
@@ -94,10 +101,7 @@ public class MainMenu extends JFrame {
                 new WordSQDialog(getInstsance());
             }
         });
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
+        attachUI(0, 2, 2, 1);
         centreDivider.add(wordGameSL, gbc);
 
         wordGameMCQ = new JButton("MCQ Questions");
@@ -109,10 +113,7 @@ public class MainMenu extends JFrame {
                 new WordGameMCQDialog(getInstsance());
             }
         });
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
+        attachUI(0, 4, 2, 1);
         centreDivider.add(wordGameMCQ, gbc);
 
         showWordFrequency = new JButton("Show Frequency");
@@ -124,10 +125,7 @@ public class MainMenu extends JFrame {
                 new WordFrequencyUI(getInstsance());
             }
         });
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
+        attachUI(0, 6, 2, 1);
         centreDivider.add(showWordFrequency, gbc);
 
         addWordBtn = new JButton("Add Words");
@@ -137,10 +135,7 @@ public class MainMenu extends JFrame {
                 new AddWordUI(getInstsance());
             }
         });
-        gbc.gridx = 0;
-        gbc.gridy = 8;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
+        attachUI(0, 8, 2, 1);
         centreDivider.add(addWordBtn, gbc);
 
         mWordSettings = new JButton("Word Settings");
@@ -153,10 +148,7 @@ public class MainMenu extends JFrame {
             }
         });
 
-        gbc.gridx = 0;
-        gbc.gridy = 10;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
+        attachUI(0, 10, 2, 1);
         centreDivider.add(mWordSettings, gbc);
 
         this.setVisible(true);
