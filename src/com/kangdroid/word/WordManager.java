@@ -44,6 +44,7 @@ public class WordManager {
 		if (isDBAvailable) {
 			try {
 				dbm.registerWord(words, meaning);
+				this.add(words, meaning); // register to local side as well.
 			} catch (SQLException e) {
 				this.add(words, meaning);
 				return false; // Return false when registering on DB.
