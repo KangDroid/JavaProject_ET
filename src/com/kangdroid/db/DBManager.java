@@ -27,7 +27,7 @@ public class DBManager {
                     "greenjoa",
                     "greenjoa");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("JDBC Driver Load Failed");
             System.out.println("PLEASE CHECK WHETHER JDBC DRIVER ADDED TO LIBRARY PATH.");
             System.out.println("PLEASE REFER TO REPORT FOR MORE DETAILS.");
@@ -38,7 +38,7 @@ public class DBManager {
             System.out.println("PLEASE CHECK WHETHER SERVER IS ONLINE/OFFLINE. CONTACT TO ADMIN FOR DETAILS");
             System.out.println("FALLING BACK TO TXT-BASED DICTIONARY. SOME FEATURE WILL BE LIMITED.");
             JOptionPane.showMessageDialog(null, "PLEASE CHECK WHETHER SERVER IS ONLINE/OFFLINE. CONTACT TO ADMIN FOR DETAILS \nFALLING BACK TO TXT-BASED DICTIONARY. SOME FEATURE WILL BE LIMITED.", "DB Connection Failed", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
         if (conn != null) {
