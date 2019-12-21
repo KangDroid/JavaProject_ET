@@ -15,17 +15,6 @@ public class WordFrequencyUI {
     private JPanel mPanelMain;
     private JPanel mButtonArea;
 
-    // TextArea
-    private JTextArea mTopList;
-    private JTextArea mBottomList;
-
-    // Scrollpane for TextArea
-    private JScrollPane mTopScroll;
-    private JScrollPane mBottomScroll;
-
-    // Buttons
-    private JButton mPrevBtn;
-
     public WordFrequencyUI(MainMenu mm) {
         this.mMain = mm;
         init();
@@ -52,19 +41,22 @@ public class WordFrequencyUI {
         attachUI(0, 2, 2, 1);
         mPanelMain.add(new JLabel("Bottom 10:"), gbc);
 
-        mTopList = new JTextArea(8, 30);
+        // TextArea
+        JTextArea mTopList = new JTextArea(8, 30);
         mTopList.setEditable(false);
-        mTopScroll = new JScrollPane(mTopList);
+        // Scrollpane for TextArea
+        JScrollPane mTopScroll = new JScrollPane(mTopList);
         attachUI(3, 0, 2, 1);
         mPanelMain.add(mTopScroll, gbc);
 
-        mBottomList = new JTextArea(8, 30);
+        JTextArea mBottomList = new JTextArea(8, 30);
         mBottomList.setEditable(false);
-        mBottomScroll = new JScrollPane(mBottomList);
+        JScrollPane mBottomScroll = new JScrollPane(mBottomList);
         attachUI(3, 2, 2, 1);
         mPanelMain.add(mBottomScroll, gbc);
 
-        mPrevBtn = new JButton("Back to Main Menu");
+        // Buttons
+        JButton mPrevBtn = new JButton("Back to Main Menu");
         mPrevBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

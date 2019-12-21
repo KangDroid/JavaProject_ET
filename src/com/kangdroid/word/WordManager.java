@@ -5,6 +5,8 @@ import com.kangdroid.db.DBManager;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,8 +105,8 @@ public class WordManager {
 			File file = new File("words.txt");
 			Scanner scanner;
 			try {
-				scanner = new Scanner(file, "UTF-8");
-			} catch (FileNotFoundException e) {
+				scanner = new Scanner(file, StandardCharsets.UTF_8);
+			} catch (IOException e) {
 				System.out.println("Cannot Find File Information.");
 				return;
 			}

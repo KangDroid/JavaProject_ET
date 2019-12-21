@@ -9,16 +9,10 @@ public class AddWordUI extends JDialog {
     // Root
     private MainMenu mMain;
 
-    // The Main Panel
-    private JPanel mMainPanel;
-    private JPanel mBtnPanel;
-
     // Text Input
     private JTextField mWordInput;
     private JTextField mMeaningInput;
 
-    // Buttons
-    private JButton mCloseBtn;
     private JButton mSubmitWords;
 
     public AddWordUI(MainMenu mm) {
@@ -30,7 +24,8 @@ public class AddWordUI extends JDialog {
     private void init() {
         this.setSize(500, 200);
 
-        mMainPanel = new JPanel(new GridLayout(5, 1));
+        // The Main Panel
+        JPanel mMainPanel = new JPanel(new GridLayout(5, 1));
         this.add(mMainPanel);
 
         mMainPanel.add(new JLabel("Words:"));
@@ -47,10 +42,11 @@ public class AddWordUI extends JDialog {
         });
         mMainPanel.add(mMeaningInput);
 
-        mBtnPanel = new JPanel(new FlowLayout());
+        JPanel mBtnPanel = new JPanel(new FlowLayout());
         mMainPanel.add(mBtnPanel);
 
-        mCloseBtn = new JButton("Close");
+        // Buttons
+        JButton mCloseBtn = new JButton("Close");
         mCloseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -66,7 +62,7 @@ public class AddWordUI extends JDialog {
                 String words = mWordInput.getText().trim();
                 String meaning = mMeaningInput.getText().trim();
                 if (mMain.getWg().addWordWrapperTwo(words, meaning)) {
-                    JOptionPane.showMessageDialog(null, "Adding words to game successfull!");
+                    JOptionPane.showMessageDialog(null, "Adding words to game successful!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to add words!", "Failed", JOptionPane.ERROR_MESSAGE);
                 }
