@@ -20,6 +20,7 @@ public class WordSettingsUI {
     private JTextField mMCQTimeLimit;
     private JTextField mOETimeLimit;
 
+    private JButton mClose;
     private JButton mSubmit;
 
     public WordSettingsUI(MainMenu mm) {
@@ -122,7 +123,7 @@ public class WordSettingsUI {
 
         // close
         attachUI(0, 10, 2, 1);
-        JButton mClose = new JButton("Close");
+        mClose = new JButton("Close");
         mClose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

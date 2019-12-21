@@ -1,8 +1,11 @@
 package com.kangdroid.wordui;
 
 import com.kangdroid.word.WordGame;
+import com.kangdroid.word.WordManager;
+import com.kangdroid.word.WordSettings;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +15,25 @@ public class MainMenu extends JFrame {
     private JPanel centreDivider;
     private WordGame wg;
 
+    // The Labels
+    private JLabel mainTitle;
+
+    // The Buttons
+    private JButton showWordList;
+    private JButton mFindWord;
+    private JButton wordGameSL;
+    private JButton wordGameMCQ;
+    private JButton showWordFrequency;
+    private JButton addWordBtn;
+    private JButton mWordSettings;
+    private JButton mRemoveWord;
+
     // GBC
     private GridBagConstraints gbc;
+
+    // Button Size
+    private int height = 23;
+    private int width = 170;
 
     // The Constructor
     public MainMenu() {
@@ -54,8 +74,7 @@ public class MainMenu extends JFrame {
         this.add(topDivider, BorderLayout.NORTH);
 
         // Label
-        // The Labels
-        JLabel mainTitle = new JLabel("Word Game(" + ((wg.getDBStatus()) ? "Using DB)" : "Using TXT)"));
+        mainTitle = new JLabel("Word Game(" + ((wg.getDBStatus()) ? "Using DB)" : "Using TXT)"));
         topDivider.add(mainTitle, BorderLayout.CENTER);
 
         // Main Centre Divider
@@ -71,10 +90,7 @@ public class MainMenu extends JFrame {
         centreDivider.add(new JLabel("Word Related Menu"), gbc);
 
         // The Buttons
-        // The Buttons
-        JButton showWordList = new JButton("Show words for game!");
-        int width = 170;// Button Size
-        int height = 23;
+        showWordList = new JButton("Show words for game!");
         showWordList.setPreferredSize(new Dimension(width, height));
         showWordList.addActionListener(new ActionListener() {
                 @Override
@@ -88,7 +104,7 @@ public class MainMenu extends JFrame {
         attachUI(0, 2, 2, 1);
         centreDivider.add(showWordList, gbc);
 
-        JButton mFindWord = new JButton("Find Meaning!");
+        mFindWord = new JButton("Find Meaning!");
         mFindWord.setPreferredSize(new Dimension(width, height));
         mFindWord.addActionListener(new ActionListener() {
             @Override
@@ -106,7 +122,7 @@ public class MainMenu extends JFrame {
         attachUI(0, 4, 2, 1);
         centreDivider.add(mFindWord, gbc);
 
-        JButton showWordFrequency = new JButton("Show Frequency");
+        showWordFrequency = new JButton("Show Frequency");
         showWordFrequency.setPreferredSize(new Dimension(width, height));
         showWordFrequency.addActionListener(new ActionListener() {
             @Override
@@ -119,7 +135,7 @@ public class MainMenu extends JFrame {
         attachUI(0, 6, 2, 1);
         centreDivider.add(showWordFrequency, gbc);
 
-        JButton addWordBtn = new JButton("Add Words");
+        addWordBtn = new JButton("Add Words");
         addWordBtn.setPreferredSize(new Dimension(width, height));
         addWordBtn.addActionListener(new ActionListener() {
             @Override
@@ -130,7 +146,7 @@ public class MainMenu extends JFrame {
         attachUI(0, 8, 2, 1);
         centreDivider.add(addWordBtn, gbc);
 
-        JButton mRemoveWord = new JButton("Remove Words");
+        mRemoveWord = new JButton("Remove Words");
         mRemoveWord.setPreferredSize(new Dimension(width, height));
         mRemoveWord.addActionListener(new ActionListener() {
             @Override
@@ -155,7 +171,7 @@ public class MainMenu extends JFrame {
         attachUI(4, 0, 2, 1);
         centreDivider.add(new JLabel("Game Related Menu"), gbc);
 
-        JButton wordGameSL = new JButton("OE Question!");
+        wordGameSL = new JButton("OE Question!");
         wordGameSL.setPreferredSize(new Dimension(width, height));
         wordGameSL.addActionListener(new ActionListener() {
             @Override
@@ -168,7 +184,7 @@ public class MainMenu extends JFrame {
         attachUI(4, 2, 2, 1);
         centreDivider.add(wordGameSL, gbc);
 
-        JButton wordGameMCQ = new JButton("MCQ Questions");
+        wordGameMCQ = new JButton("MCQ Questions");
         wordGameMCQ.setPreferredSize(new Dimension(width, height));
         wordGameMCQ.addActionListener(new ActionListener() {
             @Override
@@ -181,7 +197,7 @@ public class MainMenu extends JFrame {
         attachUI(4, 4, 2, 1);
         centreDivider.add(wordGameMCQ, gbc);
 
-        JButton mWordSettings = new JButton("Word Settings");
+        mWordSettings = new JButton("Word Settings");
         mWordSettings.setPreferredSize(new Dimension(width, height));
         mWordSettings.addActionListener(new ActionListener() {
             @Override

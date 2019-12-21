@@ -1,10 +1,10 @@
 package com.kangdroid.db;
 
+import com.kangdroid.word.Word;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -41,7 +41,11 @@ public class DBManager {
             //e.printStackTrace();
             return false;
         }
-        return conn != null;
+        if (conn != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private int getLastIndex() {
@@ -110,8 +114,8 @@ public class DBManager {
         //File file_input = new File("C:\\voc_test.txt");
         String sql = "insert into kangdroidword values(?,?,?)";
         try {
-            file_sc = new Scanner(file_input, StandardCharsets.UTF_8);
-        } catch (IOException e) {
+            file_sc = new Scanner(file_input, "UTF-8");
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 

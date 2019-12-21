@@ -16,11 +16,18 @@ public class WordGameMCQDialog {
     private JPanel centreArea;
     private JPanel mcqArea;
 
+    // JTextArea
+    private JTextArea mcqShowArea;
+
     // JRadioButton Container
     ButtonGroup radioGroup;
 
     // JRadioButton
     private JRadioButton[] mcqShow;
+
+    // JButton
+    private JButton submitBtn;
+    private JButton mCancelBtn;
 
     public WordGameMCQDialog(MainMenu mm) {
         this.mMain = mm;
@@ -51,8 +58,7 @@ public class WordGameMCQDialog {
         mMain.add(mcqArea, BorderLayout.EAST);
 
         // MCQ Show Text Area
-        // JTextArea
-        JTextArea mcqShowArea = new JTextArea(20, 20);
+        mcqShowArea = new JTextArea(20, 20);
         mcqShowArea.setEditable(false);
         centreArea.add(new JScrollPane(mcqShowArea), BorderLayout.WEST);
 
@@ -66,7 +72,7 @@ public class WordGameMCQDialog {
         }
 
         // Cancel(Previous Button)
-        JButton mCancelBtn = new JButton("Go back to Main Menu");
+        mCancelBtn = new JButton("Go back to Main Menu");
         mCancelBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -81,8 +87,7 @@ public class WordGameMCQDialog {
         bottomArea.add(mCancelBtn);
 
         // Submit Button
-        // JButton
-        JButton submitBtn = new JButton("Submit");
+        submitBtn = new JButton("Submit");
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
