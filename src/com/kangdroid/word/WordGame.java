@@ -18,6 +18,10 @@ public class WordGame {
 		return words.removeWord();
 	}
 
+	public boolean getDBStatus() {
+		return words.getDBAStatus();
+	}
+
 	public String searchWrapper(String input) {
 		return words.searchWord(input);
 	}
