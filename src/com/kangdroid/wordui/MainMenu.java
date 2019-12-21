@@ -26,6 +26,7 @@ public class MainMenu extends JFrame {
     private JButton showWordFrequency;
     private JButton addWordBtn;
     private JButton mWordSettings;
+    private JButton mRemoveWord;
 
     // GBC
     private GridBagConstraints gbc;
@@ -156,6 +157,26 @@ public class MainMenu extends JFrame {
         attachUI(0, 10, 2, 1);
         centreDivider.add(addWordBtn, gbc);
 
+        mRemoveWord = new JButton("Remove Words");
+        mRemoveWord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String finder = JOptionPane.showInputDialog("Input word you want to delete.");
+                if (finder != null) {
+                    if (finder.equals("")) {
+                        JOptionPane.showMessageDialog(null, "You need to enter the word!", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        int what = JOptionPane.showConfirmDialog(null, wg.searchWrapper(finder) + "\nDo you want to delete this word?");
+                        if (what == 0) {
+                            wg.removeWord();
+                        }
+                    }
+                }
+            }
+        });
+        attachUI(0, 12, 2, 1);
+        centreDivider.add(mRemoveWord, gbc);
+
         mWordSettings = new JButton("Word Settings");
         mWordSettings.addActionListener(new ActionListener() {
             @Override
@@ -166,7 +187,7 @@ public class MainMenu extends JFrame {
             }
         });
 
-        attachUI(0, 12, 2, 1);
+        attachUI(0, 14, 2, 1);
         centreDivider.add(mWordSettings, gbc);
 
         this.setVisible(true);

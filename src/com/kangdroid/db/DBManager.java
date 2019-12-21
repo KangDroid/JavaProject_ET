@@ -66,6 +66,14 @@ public class DBManager {
         return idx;
     }
 
+    public void removeWord(String words) throws SQLException {
+        String sql = "delete from kangdroidword where Word = (?)";
+        connectDB();
+        psmt = conn.prepareStatement(sql);
+        psmt.setString(1, words);
+        psmt.execute();
+    }
+
     public void registerWord(String words, String meaning) throws SQLException {
 
         String sql = "insert into kangdroidword values(?,?,?)";

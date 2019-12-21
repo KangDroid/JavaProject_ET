@@ -14,6 +14,10 @@ public class WordGame {
 		words.load();
 	}
 
+	public boolean removeWord() {
+		return words.removeWord();
+	}
+
 	public String searchWrapper(String input) {
 		return words.searchWord(input);
 	}

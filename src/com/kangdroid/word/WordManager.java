@@ -2,6 +2,7 @@ package com.kangdroid.word;
 
 import com.kangdroid.db.DBManager;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -14,10 +15,26 @@ public class WordManager {
 	Set<Word> st = new HashSet<>();
 	DBManager dbm;
 	boolean isDBAvailable;
+	Word tmpSaver;
 
 	public WordManager() {
 		this.dbm = new DBManager();
 		isDBAvailable = this.dbm.connectDB();
+	}
+
+	public boolean removeWord() {
+		if (isDBAvailable) {
+			try {
+				dbm.removeWord(tmpSaver.getWord());
+			} catch (SQLException e) {
+				st.remove(tmpSaver);
+				JOptionPane.showMessageDialog(null, "Cannot delete word " + tmpSaver.getWord() + "on DB. Deleting internal data!");
+				return false; // Return false when registering on DB.
+			}
+		}
+		st.remove(tmpSaver);
+		JOptionPane.showMessageDialog(null, "Successfully deleted " + tmpSaver.getWord() + "!");
+		return true;
 	}
 
 	public String searchWord(String target) {
@@ -27,6 +44,7 @@ public class WordManager {
 			Word tmp = tmpIterator.next();
 			if (tmp.getWord().equals(target)) {
 				t = "The Word " + target + " its meaning is : " + tmp.getWordMeaning();
+				this.tmpSaver = tmp;
 				break;
 			}
 		}
