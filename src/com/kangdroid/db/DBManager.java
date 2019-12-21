@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 public class DBManager {
     private Connection conn;
@@ -18,6 +19,97 @@ public class DBManager {
 
     public Connection getConn() {
         return conn;
+    }
+
+    public boolean connectForPREF() {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mariadb://kangdroid.iptime.org:9095/CustomPreset",
+                    "greenjoa",
+                    "greenjoa");
+        } catch (ClassNotFoundException e) {
+            return false;
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            return false;
+        }
+        if (conn != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkExists(String inputName) {
+        HashMap<String, Integer> tmpHashMap = new HashMap<>();
+
+        ResultSet rs;
+
+        String sql = "select * from CustomPreset";
+        try {
+            psmt = conn.prepareStatement(sql);
+            rs = psmt.executeQuery();
+            while (rs.next()) { //1, 2, 3
+                String name = rs.getString(1);
+                tmpHashMap.put(name, 10);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tmpHashMap.containsKey(inputName);
+    }
+
+    public Object[] getChoice() {
+        Vector<String> tmpVector = new Vector<>();
+
+        ResultSet rs;
+
+        String sql = "select * from CustomPreset";
+        try {
+            psmt = conn.prepareStatement(sql);
+            rs = psmt.executeQuery();
+            while (rs.next()) { //1, 2, 3
+                tmpVector.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tmpVector.toArray();
+
+    }
+
+    public int[] getValue(String presetName) {
+        int[] tmpArr = new int[5];
+        String sql = "select * from CustomPreset where PresetName = (?)";
+
+        if (conn == null) System.out.println("Conn is NULL");
+        try {
+            PreparedStatement tmp = conn.prepareStatement(sql);
+            tmp.setString(1, presetName);
+            ResultSet rs_two = tmp.executeQuery();
+            while (rs_two.next()) {
+                for (int i = 0; i < tmpArr.length; i++) {
+                    tmpArr[i] = rs_two.getInt(i+2);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tmpArr;
+    }
+
+    public void putValue(String presetName, int oectr, int mcqctr, int mcqchoicectr, long mcqtl, long oetl) throws SQLException {
+        String sql = "insert into CustomPreset values(?,?,?,?,?,?)";
+        psmt = conn.prepareStatement(sql);
+        psmt.setString(1, presetName);
+        psmt.setInt(2, oectr);
+        psmt.setInt(3, mcqctr);
+        psmt.setInt(4, mcqchoicectr);
+        psmt.setLong(5, mcqtl);
+        psmt.setLong(6, oetl);
+        psmt.execute();
     }
 
     public boolean connectDB() {

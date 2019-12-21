@@ -1,11 +1,14 @@
 package com.kangdroid.wordui;
 
+import com.kangdroid.db.DBManager;
 import com.kangdroid.word.WordSettings;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Arrays;
 
 public class WordSettingsUI {
 
@@ -22,6 +25,8 @@ public class WordSettingsUI {
 
     private JButton mClose;
     private JButton mSubmit;
+    private JButton mPreset;
+    private JButton mSavePreset;
 
     public WordSettingsUI(MainMenu mm) {
         this.mMain = mm;
@@ -37,6 +42,10 @@ public class WordSettingsUI {
 
 
     private void init() {
+        // For saving Preference
+        DBManager dbm = new DBManager();
+        boolean isConnected = dbm.connectForPREF();
+
         mMainPanelWS = new JPanel(new GridBagLayout());
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.VERTICAL;
@@ -159,32 +168,87 @@ public class WordSettingsUI {
                     return;
                 }
 
-                if (mcqCount <= 0 || mcqCount >= 30) {
-                    JOptionPane.showMessageDialog(null, "MCQ Question cannot be under 0 or more than 30.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                if (mcqCount <= 0) {
+                    JOptionPane.showMessageDialog(null, "MCQ Question cannot be under 0.", "Error Message", JOptionPane.ERROR_MESSAGE);
                     restoreString();
-                } else if (moeCount <= 0 || moeCount >= 30) {
-                    JOptionPane.showMessageDialog(null, "OE Question cannot be under 0 or more than 30.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                } else if (moeCount <= 0) {
+                    JOptionPane.showMessageDialog(null, "OE Question cannot be under 0.", "Error Message", JOptionPane.ERROR_MESSAGE);
                     restoreString();
-                } else if (mcqchoice <= 0 || mcqchoice >= 10) {
-                    JOptionPane.showMessageDialog(null, "MCQ Choice cannot be under 0 or more than 10.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                } else if (mcqchoice <= 0) {
+                    JOptionPane.showMessageDialog(null, "MCQ Choice cannot be under 0 .", "Error Message", JOptionPane.ERROR_MESSAGE);
                     restoreString();
-                } else if (mcqlimit <= 1000 || mcqlimit >= 1000000) {
-                    JOptionPane.showMessageDialog(null, "MCQ Time Limit should not less than 1s or should not greater than 100s", "Error Message", JOptionPane.ERROR_MESSAGE);
+                } else if (mcqlimit <= 100) {
+                    JOptionPane.showMessageDialog(null, "MCQ Time Limit should not less than 0.1s", "Error Message", JOptionPane.ERROR_MESSAGE);
                     restoreString();
-                } else if (oelimit <= 1000 || oelimit >= 1000000) {
+                } else if (oelimit <= 100) {
                     JOptionPane.showMessageDialog(null, "OE Time Limit should not less than 1s or should not greater than 100s", "Error Message", JOptionPane.ERROR_MESSAGE);
                     restoreString();
                 } else {
-                    WordSettings.mMCQCount = Integer.parseInt(mMCQCtr.getText());
-                    WordSettings.mOECount = Integer.parseInt(mOECtr.getText());
-                    WordSettings.mMCQChoiceCount = Integer.parseInt(mMCQChoiceCT.getText());
-                    WordSettings.mMCQTimeLimit = Long.parseLong(mMCQTimeLimit.getText());
-                    WordSettings.mOETimeLimit = Long.parseLong(mOETimeLimit.getText());
+                    setValue(Integer.parseInt(mOECtr.getText()), Integer.parseInt(mMCQCtr.getText()), Integer.parseInt(mMCQChoiceCT.getText()),
+                            Long.parseLong(mMCQTimeLimit.getText()), Long.parseLong(mOETimeLimit.getText()));
                     JOptionPane.showMessageDialog(null, "Successfully changed Value!");
                 }
             }
         });
         mMainPanelWS.add(mSubmit, gbc);
+
+        attachUI(0, 12, 2, 1);
+        mPreset = new JButton("Preset");
+        mPreset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] mChoices = dbm.getChoice();
+                Object mSelected = JOptionPane.showInputDialog(null, "Which preset do you want to use?", "Preset Selection",
+                        JOptionPane.DEFAULT_OPTION, null, mChoices, "Easy");
+                if (mSelected != null) {
+                    int[] arr = dbm.getValue(mSelected.toString());
+                    setValue(arr[0], arr[1], arr[2], arr[3], arr[4]);
+                    JOptionPane.showMessageDialog(null, "Successfully changed Value!");
+                }
+            }
+        });
+        if (isConnected) {
+            mMainPanelWS.add(mPreset, gbc);
+        }
+
+        attachUI(4, 12 ,2 ,1);
+        mSavePreset = new JButton("Save Current value to server");
+        mSavePreset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String mUserInput = JOptionPane.showInputDialog(null, "Enter Preset Name");
+                if (mUserInput != null) {
+                    if (mUserInput.equals("")) {
+                        JOptionPane.showMessageDialog(null, "You need to enter the word!", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        if (dbm.checkExists(mUserInput)) {
+                            JOptionPane.showMessageDialog(null, "Profile name already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            try {
+                                dbm.putValue(mUserInput, Integer.parseInt(mOECtr.getText()), Integer.parseInt(mMCQCtr.getText()), Integer.parseInt(mMCQChoiceCT.getText()),
+                                        Long.parseLong(mMCQTimeLimit.getText()), Long.parseLong(mOETimeLimit.getText()));
+                                JOptionPane.showMessageDialog(null, "Successfully saved to DB!");
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(null, "DB Failed", "Error", JOptionPane.ERROR_MESSAGE);
+                                //ex.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        if (isConnected) {
+            mMainPanelWS.add(mSavePreset, gbc);
+        }
+    }
+
+    public void setValue(int oectr, int mcqctr, int mcqchoicectr, long mcqtl, long oetl) {
+        WordSettings.mOECount = oectr;
+        WordSettings.mMCQCount = mcqctr;
+        WordSettings.mMCQChoiceCount = mcqchoicectr;
+        WordSettings.mMCQTimeLimit = mcqtl;
+        WordSettings.mOETimeLimit = oetl;
+        restoreString();
     }
 
     public void restoreString() {
