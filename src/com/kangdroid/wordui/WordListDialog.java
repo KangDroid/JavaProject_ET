@@ -1,9 +1,13 @@
 package com.kangdroid.wordui;
 
+import com.kangdroid.word.Word;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 public class WordListDialog {
     MainMenu mMain;
@@ -13,14 +17,17 @@ public class WordListDialog {
 
     // Buttons
     JButton closeBtn;
-    JButton nextBtn;
 
     // The Label
     JLabel topTitle; // Title
 
     // Text Area
-    JTextArea wordShowArea; // Word Showing Area
     JScrollPane scrollPane;
+
+    // Table
+    JTable mShowingTable;
+    String[] columnNames = {"Word", "Meaning"};
+    Object[][] mRowData;
 
     public WordListDialog(MainMenu mm) {
         this.mMain = mm;
@@ -50,24 +57,26 @@ public class WordListDialog {
             }
         });
         bottomDividerWLD.add(closeBtn, BorderLayout.WEST);
-        nextBtn = new JButton("Next");
 
         // Child Panel - Title
         topTitle = new JLabel("Word List for word game!");
         topDividerWLD.add(topTitle);
 
         // Word Show Area with Scroll Pane
-        wordShowArea = new JTextArea(5, 30);
-        scrollPane = new JScrollPane(wordShowArea);
+        mRowData = new Object[mMain.getWg().getWordCount()][2];
+        Iterator<Word> mIterTmp = mMain.getWg().getIter();
+        for (int i = 0; i < mRowData.length; i++) {
+            if (mIterTmp.hasNext()) {
+                Word tmp = mIterTmp.next();
+                mRowData[i][0] = tmp.getWord(); // words
+                mRowData[i][1] = tmp.getWordMeaning(); // meaning
+            }
+        }
+        DefaultTableModel dfm = new DefaultTableModel(mRowData, columnNames);
+        mShowingTable = new JTable(dfm);
+        scrollPane = new JScrollPane(mShowingTable);
         mMain.setPreferredSize(new Dimension(450, 100));
         mMain.add(scrollPane, BorderLayout.CENTER);
 
-        // Get the Words from Word Manager.
-        setTextWord();
-    }
-
-    private void setTextWord() {
-        wordShowArea.setEditable(false);
-        wordShowArea.setText(mMain.getWg().getWordList());
     }
 }

@@ -3,6 +3,7 @@ package com.kangdroid.word;
 import com.kangdroid.wordui.ThreadShared;
 
 import javax.swing.*;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,6 +13,14 @@ public class WordGame {
 	public WordGame() {
 		words = new WordManager();
 		words.load();
+	}
+
+	public Iterator<Word> getIter() {
+		return words.getIterator();
+	}
+
+	public int getWordCount() {
+		return words.getWordCount();
 	}
 
 	public boolean removeWord() {

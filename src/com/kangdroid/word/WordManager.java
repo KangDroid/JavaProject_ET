@@ -22,6 +22,14 @@ public class WordManager {
 		isDBAvailable = this.dbm.connectDB();
 	}
 
+	public Iterator<Word> getIterator() {
+		return st.iterator();
+	}
+
+	public int getWordCount() {
+		return st.size();
+	}
+
 	public boolean removeWord() {
 		if (isDBAvailable) {
 			try {
