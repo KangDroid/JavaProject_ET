@@ -73,7 +73,12 @@ public class WordListDialog {
             }
         }
         DefaultTableModel dfm = new DefaultTableModel(mRowData, columnNames);
-        mShowingTable = new JTable(dfm);
+        mShowingTable = new JTable(dfm) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // force return false so it isn't really editable.
+            }
+        };
         scrollPane = new JScrollPane(mShowingTable);
         mMain.setPreferredSize(new Dimension(450, 100));
         mMain.add(scrollPane, BorderLayout.CENTER);
